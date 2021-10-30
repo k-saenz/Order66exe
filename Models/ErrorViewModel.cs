@@ -1,5 +1,3 @@
-using System;
-
 namespace Order66exe.Models
 {
     public class ErrorViewModel

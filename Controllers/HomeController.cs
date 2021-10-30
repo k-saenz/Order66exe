@@ -1,11 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using Order66exe.Models;
-using System;
-using System.Collections.Generic;
 using System.Diagnostics;
-using System.Linq;
-using System.Threading.Tasks;
 
 namespace Order66exe.Controllers
 {
@@ -23,10 +19,17 @@ namespace Order66exe.Controllers
             return View();
         }
 
-        public IActionResult Privacy()
+        public IActionResult Rules()
         {
             return View();
         }
+
+        //TEST
+        public IActionResult TestOnePage()
+        {
+            return View();
+        }
+        //END TEST
 
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
         public IActionResult Error()
