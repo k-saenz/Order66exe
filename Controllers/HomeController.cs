@@ -19,7 +19,7 @@ namespace Order66exe.Controllers
             return View();
         }
 
-        public IActionResult Rules()
+        public IActionResult About()
         {
             return View();
         }

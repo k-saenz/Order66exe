@@ -7,8 +7,10 @@
 // Scripts
 // 
 
-window.addEventListener('DOMContentLoaded', event => {
 
+
+//jQuery Doc Load Ready Evt Listener
+$(document).ready( () => {
     // Navbar shrink function
     var navbarShrink = function () {
         const navbarCollapsible = document.body.querySelector('#mainNav');
@@ -32,9 +34,9 @@ window.addEventListener('DOMContentLoaded', event => {
     // Activate Bootstrap scrollspy on the main nav element
     const mainNav = document.body.querySelector('#mainNav');
     if (mainNav) {
-        new bootstrap.ScrollSpy(document.body, {
+        var scrollSpy = new bootstrap.ScrollSpy(document.body, {
             target: '#mainNav',
-            offset: 74,
+            //offset: 74,
         });
     };
 
@@ -55,5 +57,16 @@ window.addEventListener('DOMContentLoaded', event => {
     new SimpleLightbox({
         elements: '#portfolio a.portfolio-box'
     });
+
+    //Use Discord.js to embed pfp and other functionalities
+    const Discord = require('discord.js');
+
+    const owner = new Discord.User();
+    const admin = new Discord.User();
+
+    owner.id = '666065974650470431';
+    admin.id = '275031750915391491';
+
+    console.log(owner.username);
 
 });
