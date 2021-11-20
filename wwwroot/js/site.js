@@ -3,6 +3,9 @@
 * Copyright 2013-2021 Start Bootstrap
 * Licensed under MIT (https://github.com/StartBootstrap/startbootstrap-creative/blob/master/LICENSE)
 */
+
+//const { request } = require('http');
+
 //
 // Scripts
 // 
@@ -59,14 +62,27 @@ $(document).ready( () => {
     });
 
     //Use Discord.js to embed pfp and other functionalities
-    const Discord = require('discord.js');
+    const discord = require('discord.js');
 
-    const owner = new Discord.User();
-    const admin = new Discord.User();
+    const owner = new discord.User();
+    const admin = new discord.User();
+
+    const client = new discord.Client();
+
+    const server = client.guilds.get("688917645139116290");
+    const role = server.roles.cache.find(role => role.name === 'Sandwich Overlords');
+
+    console.log(role.name);
 
     owner.id = '666065974650470431';
     admin.id = '275031750915391491';
 
     console.log(owner.username);
+
+    //require(['discord.js'], (require) => {
+
+    //});
+
+
 
 });
