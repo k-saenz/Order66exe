@@ -1,6 +1,6 @@
 <h1>Welcome to the Order66.exe Website repo</h1>
 <br>
-<h3>This site is being developed using ASP.NET Core, with a .NET 5.0 framework</h3>
+<h3>This site is being developed using ASP.NET Core 5.0</h3>
 <p>
   If you have any experience with Website designing (HTML, CSS, JS, etc.) or Microsoft technologies (ASP.NET, C#, etc), or if you would like learn any of these, 
   you are more than welcome to clone this repo and mess around with the code.
