@@ -3,8 +3,9 @@
 }
 
 
-<main>
-
+<main class="col-12 col-md-9 col-xl-8 py-md-3 pl-md-5 bd-content">
+    <!-- Rules Section Heading-->
+    <h2 class="page-section-heading text-center text-uppercase text-secondary mb-0">Server Rules</h2>
 
     <!--TODO maybe?: keep this list as rules list and change section after this to describe roles and stuff-->
     <!--Rules list-->
@@ -26,6 +27,8 @@
                         <h2>General Rules</h2>
                         <h5>These rules apply to any part of the server, whether that be voice or text channel</h5>
 
+                        <!--TODO: create foreach loop to iterate through object containing all rules
+                            MAYBE?: Save rules to DB and get them from there-->
                         <ol class="list-group list-group-flush">
                             <li class="list-group-item">Keep everything PG - bad words and other inappropriate language/content will be deleted and can lead to mute, kick, or ban</li>
                             <li class="list-group-item">No racism, discrimination, toxic behavior, or hate speech in any way, shape, or form</li>
