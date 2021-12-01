@@ -1,4 +1,6 @@
-﻿//jQuery Doc Load Ready Evt Listener
+﻿
+
+//jQuery Doc Load Ready Evt Listener
 $(document).ready(() => {
     // Navbar shrink function
     var navbarShrink = function () {
@@ -46,3 +48,4 @@ $(document).ready(() => {
     new SimpleLightbox({
         elements: '#portfolio a.portfolio-box'
     });
+});
