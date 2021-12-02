@@ -1,4 +1,8 @@
-﻿    <!-- Masthead-->
+﻿@{
+    ViewData["Title"] = "Server Rules";
+}
+
+<!-- Masthead-->
 <header class="masthead" id="infoMasthead">
     <div class="container px-4 px-lg-5 h-100">
         <div class="row gx-4 gx-lg-5 h-100 align-items-center justify-content-center text-center">
@@ -13,3 +17,59 @@
     </div>
 </header>
 
+<!--TODO: Make rule selection list as wide as the page-->
+<!--TODO: Format rules list that appears when list item is clicked so it appears centered and prettier-->
+
+<!-- About Section-->
+<section class="page-section bg-primary" id="infoTitle">
+    <div class="container ">
+        <div class="col-4">
+            <div class="list-group" id="list-tab" role="tablist">
+                <a class="list-group-item list-group-item-action active" id="list-general-list" data-toggle="list" href="#list-general" role="tab" aria-controls="general">General Rules</a>
+                <a class="list-group-item list-group-item-action" id="list-voice-list" data-toggle="list" href="#list-voice" role="tab" aria-controls="voice">Voice Chat</a>
+                <a class="list-group-item list-group-item-action" id="list-messages-list" data-toggle="list" href="#list-messages" role="tab" aria-controls="messages">Contact</a>
+                <a class="list-group-item list-group-item-action" id="list-settings-list" data-toggle="list" href="#list-settings" role="tab" aria-controls="settings">Settings</a>
+            </div>
+        </div>
+    </div>
+</section>
+
+
+<!--Rules list-->
+<div class="container-lg my-1 px-0 px-lg-5">
+    <div class="justify-content-center">
+        <div class="col-8">
+            <div class="tab-content" id="nav-tabContent">
+                <div class="tab-pane fade show active" id="list-general" role="tabpanel" aria-labelledby="list-general-list">
+                    <h2>General Rules</h2>
+                    <h5>These rules apply to any part of the server, whether that be voice or text channel</h5>
+
+                    <ol class="list-group list-group-flush">
+                        <li class="list-group-item">Keep everything PG - bad words and other inappropriate language/content will be deleted and can lead to mute, kick, or ban</li>
+                        <li class="list-group-item">No racism, discrimination, toxic behavior, or hate speech in any way, shape, or form</li>
+                        <li class="list-group-item">No spamming, repetitive content, nor excessive pings</li>
+                        <li class="list-group-item">Try to keep everything relevant to each channel topic. If the conversation shifts, don't worry too much about it but a mod might let everyone know if its too off-topic</li>
+                        <li class="list-group-item">Obey the staff</li>
+                        <li class="list-group-item">Avoid inappropriate nicknames (mods or admins will determine this)</li>
+                        <li class="list-group-item">No doxing, or gathering people's private information</li>
+                        <li class="list-group-item">Try to avoid controversial issues (if they come up they will be dealt with accordingly)</li>
+                        <li class="list-group-item">You don't have to be nice, just don't get personal (in other words, Its just a joke dude)</li>
+                        <li class="list-group-item">If someone asks you to "stop", please do so</li>
+                    </ol>
+                </div>
+
+                <div class="tab-pane fade" id="list-voice" role="tabpanel" aria-labelledby="list-voice-list">
+                    <h2>Voice Chat Rules</h2>
+                    <h3>In addition </h3>
+                    <ol class="list-group list-group-flush">
+                        <li class="list-group-item">Unless everyone in the call is okay with it, please keep music in its respective channel</li>
+                        <li class="list-group-item">Think before you <span class="font-italic">earrape</span> (aka being too loud). We don't have a problem with it for the most part, but it can get annoying if overdone</li>
+                        <li class="list-group-item">Depending on the occasion, you and the participants in a call may want to turn on your cameras and/or share your screen. It is purely up to each individual to decide if they want to show their face or not, and what they want us to see on their screen</li>
+                    </ol>
+                </div>
+                <div class="tab-pane fade" id="list-messages" role="tabpanel" aria-labelledby="list-messages-list">...</div>
+                <div class="tab-pane fade" id="list-settings" role="tabpanel" aria-labelledby="list-settings-list">...</div>
+            </div>
+        </div>
+    </div>
+</div>

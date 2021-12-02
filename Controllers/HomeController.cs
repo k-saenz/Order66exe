@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using Order66exe.Models;
 using System;
@@ -24,6 +25,12 @@ namespace Order66exe.Controllers
         }
 
         public IActionResult Info()
+        {
+            return View();
+        }
+
+        [Authorize]
+        public IActionResult Secret()
         {
             return View();
         }

@@ -168,3 +168,4 @@ C:\Users\Kevin\source\repos\Order66exe\obj\Debug\net5.0\Razor\Areas\Identity\Pag
 C:\Users\Kevin\source\repos\Order66exe\obj\Debug\net5.0\Razor\Areas\Identity\Pages\_ViewImports.cshtml.g.cs
 C:\Users\Kevin\source\repos\Order66exe\bin\Debug\net5.0\Microsoft.AspNetCore.NodeServices.dll
 C:\Users\Kevin\source\repos\Order66exe\obj\Debug\net5.0\Razor\Views\Home\Info.cshtml.g.cs
+C:\Users\Kevin\source\repos\Order66exe\obj\Debug\net5.0\Razor\Views\Home\Secret.cshtml.g.cs
