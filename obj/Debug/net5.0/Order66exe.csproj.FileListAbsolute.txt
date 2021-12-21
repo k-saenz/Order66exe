@@ -168,4 +168,13 @@ C:\Users\Kevin\source\repos\Order66exe\obj\Debug\net5.0\Razor\Areas\Identity\Pag
 C:\Users\Kevin\source\repos\Order66exe\obj\Debug\net5.0\Razor\Areas\Identity\Pages\_ViewImports.cshtml.g.cs
 C:\Users\Kevin\source\repos\Order66exe\bin\Debug\net5.0\Microsoft.AspNetCore.NodeServices.dll
 C:\Users\Kevin\source\repos\Order66exe\obj\Debug\net5.0\Razor\Views\Home\Info.cshtml.g.cs
-C:\Users\Kevin\source\repos\Order66exe\obj\Debug\net5.0\Razor\Views\Home\Secret.cshtml.g.cs
+C:\Users\Kevin\source\repos\Order66exe\bin\Debug\net5.0\Discord.Net.Commands.dll
+C:\Users\Kevin\source\repos\Order66exe\bin\Debug\net5.0\Discord.Net.Core.dll
+C:\Users\Kevin\source\repos\Order66exe\bin\Debug\net5.0\Discord.Net.Rest.dll
+C:\Users\Kevin\source\repos\Order66exe\bin\Debug\net5.0\Discord.Net.Webhook.dll
+C:\Users\Kevin\source\repos\Order66exe\bin\Debug\net5.0\Discord.Net.WebSocket.dll
+C:\Users\Kevin\source\repos\Order66exe\bin\Debug\net5.0\System.Interactive.Async.dll
+C:\Users\Kevin\source\repos\Order66exe\bin\Debug\net5.0\System.Linq.Async.dll
+C:\Users\Kevin\source\repos\Order66exe\bin\Debug\net5.0\Microsoft.AspNetCore.Authentication.JwtBearer.dll
+C:\Users\Kevin\source\repos\Order66exe\obj\Debug\net5.0\Razor\Views\Home\AuthFailed.cshtml.g.cs
+C:\Users\Kevin\source\repos\Order66exe\obj\Debug\net5.0\Razor\Views\Home\Events.cshtml.g.cs

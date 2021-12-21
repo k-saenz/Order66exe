@@ -7,6 +7,13 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
 using System.Threading.Tasks;
+using Discord;
+using Discord.WebSocket;
+using Discord.Rest;
+using System.Security.Claims;
+using System.Net.Http;
+using System.Net.Http.Headers;
+using System.Text.Json;
 
 namespace Order66exe.Controllers
 {
@@ -18,9 +25,10 @@ namespace Order66exe.Controllers
         {
             _logger = logger;
         }
-
+        
         public IActionResult Index()
         {
+            //ViewBag.Username = GetUserName();
             return View();
         }
 
@@ -29,8 +37,14 @@ namespace Order66exe.Controllers
             return View();
         }
 
-        [Authorize]
-        public IActionResult Secret()
+        [Authorize(AuthenticationSchemes = "Discord")]
+        public IActionResult Events()
+        {
+
+            return View();
+        }
+
+        public IActionResult AuthFailed()
         {
             return View();
         }
@@ -39,6 +53,24 @@ namespace Order66exe.Controllers
         public IActionResult Error()
         {
             return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
+        }
+
+        public string GetUserName()
+        {
+            //var id = User.Claims.First(c => c.Type == ClaimTypes.NameIdentifier).Value;
+
+            try
+            {
+                var username = User.Claims.First(c => c.Type == ClaimTypes.Name).Value;
+                var discriminator = User.Claims.First(c => c.Type == "discriminator").Value;
+
+                return username + " #" + discriminator;
+
+            }
+            catch(InvalidOperationException ex)
+            {
+                return "";
+            }
         }
     }
 }
