@@ -1,11 +1,12 @@
 ﻿@using Microsoft.AspNetCore.Identity
+@using System.Security.Claims; 
 @inject SignInManager<IdentityUser> SignInManager
 @inject UserManager<IdentityUser> UserManager
 
 @if (SignInManager.IsSignedIn(User))
 {
     <li class="nav-item mx-0 mx-lg-1">
-        <a class="nav-link py-3 px-0 px-lg-3 rounded" asp-area="Identity" asp-page="/Account/Manage/Index" title="Manage">Hello, @User.Identity.Name!</a>
+        <a class="nav-link py-3 px-0 px-lg-3 rounded" asp-area="Identity" asp-page="/Account/Manage/Index" title="Manage">Hello, @User.Claims.First(c => c.Type == ClaimTypes.Name).Value!</a>
     </li>
     <li class="nav-item mx-0 mx-lg-1">
         <form class="form-inline" asp-area="Identity" asp-page="/Account/Logout" asp-route-returnUrl="@Url.Action("Index", "Home", new { area = "" })">
@@ -19,7 +20,6 @@
 else
 {
     <li class="nav-item mx-0 mx-lg-1">
-        <a class="nav-link py-3 px-0 px-lg-3 rounded" href="https://discord.com/oauth2/authorize?client_id=915418998638792714&scope=identify&response_type=code&redirect_uri=https%3A%2F%2Flocalhost%3A44333%2Fauth%2FoauthCallback&state=CfDJ8OEPI95ko3RJiK6QKc9KEzPE8tqRX83TJbW5moBCQStJTKjlwuqP3ctgki-yRafxX7QTvRPMAP6KtTDgqUzlMBrrKVqX0Fxbm1n_iKYrIY-o1aD8oYRxECrRVN3jIm89Tv6JjisC1Z4tLRhNtK6GIMn08nR2YaAn0qBy0-qA8Nb7t2b2za4hFrOnKj7QS761uypwzCQtISjSkoT8YGOQpAkHsCMMgvgYjLWcjMB-Mbc7">Login</a>
+        <a class="nav-link py-3 px-0 px-lg-3 rounded" asp-controller="Home" asp-action="Login">Login</a>
     </li>
 }
-

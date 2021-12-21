@@ -46,7 +46,9 @@ namespace Order66exe
 
             services.AddDefaultIdentity<IdentityUser>(options => options.SignIn.RequireConfirmedAccount = true)
                 .AddEntityFrameworkStores<ApplicationDbContext>();
+
             services.AddControllersWithViews();
+            services.AddRazorPages();
 
             /***START AUTHENTICATION METHODS***/
             //Authenticate on Startup
@@ -96,11 +98,15 @@ namespace Order66exe
 
                         //Where to get info from
                         //Returns user object as JSON
-                        options.UserInformationEndpoint = "https://discord.com/api/users/@me ";
+                        options.UserInformationEndpoint = "https://discord.com/api/users/@me";
+                        
+                        //Returns Guild Member object as JSON with embedded User Object
+                        //options.UserInformationEndpoint = "https://discord.com/api/users/@me/guilds/688917645139116290/member";
 
                         //Get stuff from JSON that was sent with user object
                         options.ClaimActions.MapJsonKey(ClaimTypes.NameIdentifier, "id");
                         options.ClaimActions.MapJsonKey(ClaimTypes.Name, "username");
+                        //options.ClaimActions.MapJsonKey(ClaimTypes.Role, "roles");
                         options.ClaimActions.MapJsonKey("Discriminator", "discriminator");
                         options.ClaimActions.MapJsonKey("Avatar", "avatar");
 
