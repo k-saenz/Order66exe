@@ -6,40 +6,59 @@ using System.Threading.Tasks;
 using Discord;
 using System.Collections.Immutable;
 using Discord.WebSocket;
+using Microsoft.Extensions.Configuration;
 
 namespace Order66exe.Models
 {
     public class DiscordUtils
     {
 
-        //private readonly ulong CLIENT_ID = 0;
-        //private readonly string REDIRECT_URL = "https://order66exe.com/";
-        //private readonly string CLIENT_SECRET = "";
+        private static DiscordSocketClient _client = new DiscordSocketClient();
+        private static SocketGuild _guild;
+        private static SocketGuildUser _user;
 
-        //private readonly ulong GUILD_ID = 688917645139116290;
-
-        //string guildDesc = "";
-
-        private DiscordSocketClient Client { get; set; }
-        private SocketGuild Guild { get; set; }
-
-        private SocketGuildUser User { get; set; }
-
-        private GuildProperties guild = new GuildProperties();
-
-        public string GetOwnerUsername()
+        public DiscordUtils(ulong guildId, ulong userId)
         {
-            SocketGuildUser ownerUser = Guild.Owner;
-
-            string owner = ownerUser.Username;
-
-            return owner;
+            //_guild returning null atm ?????
+            _guild = _client.GetGuild(guildId);
+            _user = _guild.GetUser(userId);
         }
 
-        public List<string> GetAdmins()
+        public static async Task StartBot(string token)
         {
-            return null;
+            await _client.LoginAsync(TokenType.Bot, token);
+
+            await _client.StartAsync();
         }
 
+        public List<string> UserRoles()
+        {
+            var roles = _user.Roles;
+
+            List<string> stringRoles = new List<string>();
+
+            foreach (var item in roles)
+            {
+                stringRoles.Add(item.Name);
+            }
+
+            return stringRoles;
+        }
+
+        public bool IsAdmin()
+        {
+            List<string> roles = UserRoles();
+
+            string adminRole = "sandwich overlords";
+
+            if (!roles.Contains(adminRole))
+            {
+                return false;
+            }
+            else
+            {
+                return true;
+            }
+        }
     }
 }

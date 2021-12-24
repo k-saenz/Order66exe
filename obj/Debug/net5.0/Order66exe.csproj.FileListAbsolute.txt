@@ -179,3 +179,4 @@ C:\Users\Kevin\source\repos\Order66exe\obj\Debug\net5.0\Razor\Views\Home\AuthFai
 C:\Users\Kevin\source\repos\Order66exe\obj\Debug\net5.0\Razor\Views\Home\Events.cshtml.g.cs
 C:\Users\Kevin\source\repos\Order66exe\obj\Debug\net5.0\Razor\Views\Home\Admin.cshtml.g.cs
 C:\Users\Kevin\source\repos\Order66exe\bin\Debug\net5.0\appsettings.Production.json
+C:\Users\Kevin\source\repos\Order66exe\obj\Debug\net5.0\Razor\Views\Auth\OAuthCallback.cshtml.g.cs

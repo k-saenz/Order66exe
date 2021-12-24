@@ -1,3 +1,4 @@
+using Discord.WebSocket;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
@@ -5,19 +6,14 @@ using Microsoft.AspNetCore.Authentication.OAuth;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.HttpOverrides;
-using Microsoft.AspNetCore.HttpsPolicy;
 using Microsoft.AspNetCore.Identity;
-using Microsoft.AspNetCore.Identity.UI;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.IdentityModel.Tokens;
 using Order66exe.Data;
-using System;
-using System.Collections.Generic;
-using System.Linq;
+using Order66exe.Models;
 using System.Net.Http;
 using System.Net.Http.Headers;
 using System.Security.Claims;
@@ -29,6 +25,7 @@ namespace Order66exe
 {
     public class Startup
     {
+        private DiscordSocketClient _client;
         public Startup(IConfiguration configuration)
         {
             Configuration = configuration;
@@ -86,8 +83,10 @@ namespace Order66exe
                         //Where to authorize
                         options.AuthorizationEndpoint = "https://discord.com/api/oauth2/authorize";
 
-                        //Identify scope returns user id without email
+                        //Identify scope returns user id without email and Guild info
                         options.Scope.Add("identify");
+                        options.Scope.Add("guilds");
+                        options.Scope.Add("guilds.members.read");
 
                         options.CallbackPath = new PathString("/auth/oauthCallback");
 
@@ -101,12 +100,12 @@ namespace Order66exe
                         options.UserInformationEndpoint = "https://discord.com/api/users/@me";
                         
                         //Returns Guild Member object as JSON with embedded User Object
-                        //options.UserInformationEndpoint = "https://discord.com/api/users/@me/guilds/688917645139116290/member";
+                        //options.UserInformationEndpoint = "https://discord.com/api/guilds/688917645139116290/members/@me";
 
                         //Get stuff from JSON that was sent with user object
                         options.ClaimActions.MapJsonKey(ClaimTypes.NameIdentifier, "id");
                         options.ClaimActions.MapJsonKey(ClaimTypes.Name, "username");
-                        //options.ClaimActions.MapJsonKey(ClaimTypes.Role, "roles");
+                        //options.ClaimActions.MapJsonKey("Roles", "roles");
                         options.ClaimActions.MapJsonKey("Discriminator", "discriminator");
                         options.ClaimActions.MapJsonKey("Avatar", "avatar");
 
@@ -137,6 +136,9 @@ namespace Order66exe
                     }
                 );
             /***END AUTHENTICATION METHODS***/
+
+            //START DISCORD BOT
+            DiscordUtils.StartBot(Configuration.GetValue<string>("Discord:BotToken"));
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

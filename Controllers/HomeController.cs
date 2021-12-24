@@ -3,21 +3,22 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using Order66exe.Models;
 using System;
-using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
 using System.Threading.Tasks;
-using Discord;
-using Discord.WebSocket;
-using Discord.Rest;
 using System.Security.Claims;
+using Microsoft.Extensions.Configuration;
+using Microsoft.IdentityModel.Tokens;
+using System.IdentityModel.Tokens.Jwt;
+using System.Collections.Generic;
+using System.Text;
 using System.Net.Http;
 using System.Net.Http.Headers;
-using System.Text.Json;
+using System.Net;
+using System.IO;
+using Discord.WebSocket;
 using Newtonsoft.Json;
-using Newtonsoft.Json.Linq;
-using Microsoft.Extensions.Configuration;
-using Microsoft.AspNetCore.Authentication.OAuth;
+using Discord;
 
 namespace Order66exe.Controllers
 {
@@ -25,6 +26,7 @@ namespace Order66exe.Controllers
     {
         private readonly ILogger<HomeController> _logger;
         private readonly IConfiguration _config;
+        private DiscordSocketClient _client;
 
         public HomeController(ILogger<HomeController> logger, IConfiguration config)
         {
@@ -59,35 +61,24 @@ namespace Order66exe.Controllers
         [Authorize(AuthenticationSchemes = "Discord")]
         public async Task<IActionResult> Admin()
         {
-            //Get ID and Username of legged in user
-            var id = User.Claims.First(c => c.Type == ClaimTypes.NameIdentifier).Value;
+            //Get ID and Username of logged in user
+            var userId = User.Claims.First(c => c.Type == ClaimTypes.NameIdentifier).Value;
             var username = User.Claims.First(c => c.Type == ClaimTypes.Name).Value;
+            ulong guildId = _config.GetValue<ulong>("Discord:GuildID");
+            ulong userIdUlong = Convert.ToUInt64(userId);
 
-            string requestUri = "https://discord.com/api/users/@me/guilds/688917645139116290/member";
+            DiscordUtils util = new DiscordUtils(guildId, userIdUlong);
 
-            Console.WriteLine("id: " + id);
-            Console.WriteLine("username: " + username);
+            List<string> roles = util.UserRoles();
 
-            //Create Get request
-            var request = new HttpRequestMessage(HttpMethod.Get, requestUri);
-            request.Headers.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
-            request.Headers.Authorization = new AuthenticationHeaderValue("Bearer", "");
-
-
-            //Response we get after making the get request
-            //Send request with this var then it stores the response from Discord
-            HttpClient client = new HttpClient();
-            var response = await client.SendAsync(request);
-            //response.EnsureSuccessStatusCode();
-
-            string result = response.Content.ReadAsStringAsync().Result;
-
-            //Get the user from the response
-            var json = JsonDocument.Parse(await response.Content.ReadAsStringAsync()).RootElement;
-
-            Console.WriteLine("JSON returned from API: " + result);
-
-            return View();
+            if (!util.IsAdmin())
+            {
+                return Unauthorized();
+            }
+            else
+            {
+                return View();
+            }
         }
 
         public IActionResult AuthFailed()
@@ -101,22 +92,36 @@ namespace Order66exe.Controllers
             return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
         }
 
-        public string GetUserName()
+
+        [HttpGet("GetToken")]
+        [Authorize(AuthenticationSchemes = "Discord")]
+        public string GetToken()
         {
-            //var id = User.Claims.First(c => c.Type == ClaimTypes.NameIdentifier).Value;
+            var userID = User.Claims.First(c => c.Type == ClaimTypes.NameIdentifier).Value;
 
-            try
-            {
-                var username = User.Claims.First(c => c.Type == ClaimTypes.Name).Value;
-                var discriminator = User.Claims.First(c => c.Type == "discriminator").Value;
+            //get values from configuration files
+            string key = _config.GetValue<string>("Jwt:EncryptionKey");
+            string issuer = _config.GetValue<string>("Jwt:Issuer");
+            string audience = _config.GetValue<string>("Jwt:Audience");
 
-                return username + " #" + discriminator;
+            var securityKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(key));
+            var credentials = new SigningCredentials(securityKey, SecurityAlgorithms.HmacSha256);
 
-            }
-            catch (InvalidOperationException ex)
-            {
-                return "";
-            }
+            var permClaims = new List<Claim>();
+            permClaims.Add(new Claim(JwtRegisteredClaimNames.Jti, Guid.NewGuid().ToString()));
+            permClaims.Add(new Claim("discordId", userID));
+
+            //Create JWT token
+            var token = new JwtSecurityToken(issuer, audience, permClaims,
+                expires: DateTime.Now.AddDays(7),
+                signingCredentials: credentials);
+
+            //Convert token to string
+            var jwt_token = new JwtSecurityTokenHandler().WriteToken(token);
+
+            return jwt_token;
+
         }
+
     }
 }
