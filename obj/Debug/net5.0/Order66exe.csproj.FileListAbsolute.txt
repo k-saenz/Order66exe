@@ -182,3 +182,8 @@ C:\Users\Kevin\source\repos\Order66exe\obj\Debug\net5.0\Razor\Views\Login\OAuthC
 C:\Users\Kevin\source\repos\Order66exe\bin\Debug\net5.0\AspNet.Security.OAuth.Discord.dll
 C:\Users\Kevin\source\repos\Order66exe\bin\Debug\net5.0\Discord.Net.Interactions.dll
 C:\Users\Kevin\source\repos\Order66exe\bin\Debug\net5.0\System.Reactive.dll
+C:\Users\Kevin\source\repos\Order66exe\bin\Debug\net5.0\Azure.Core.dll
+C:\Users\Kevin\source\repos\Order66exe\bin\Debug\net5.0\Azure.Identity.dll
+C:\Users\Kevin\source\repos\Order66exe\bin\Debug\net5.0\Azure.Security.KeyVault.Secrets.dll
+C:\Users\Kevin\source\repos\Order66exe\bin\Debug\net5.0\Microsoft.Identity.Client.Extensions.Msal.dll
+C:\Users\Kevin\source\repos\Order66exe\bin\Debug\net5.0\System.Memory.Data.dll

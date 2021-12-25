@@ -50,6 +50,14 @@
               "target": "Package",
               "version": "[5.0.18, )"
             },
+            "Azure.Identity": {
+              "target": "Package",
+              "version": "[1.5.0, )"
+            },
+            "Azure.Security.KeyVault.Secrets": {
+              "target": "Package",
+              "version": "[4.2.0, )"
+            },
             "Discord.Net": {
               "target": "Package",
               "version": "[3.1.0, )"

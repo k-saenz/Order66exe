@@ -21,12 +21,15 @@ using System.Text;
 using System.Text.Json;
 using System.Threading.Tasks;
 using AspNet.Security.OAuth.Discord;
+using Azure.Identity;
+using Azure.Security.KeyVault.Secrets;
+using Azure.Core;
+using System;
 
 namespace Order66exe
 {
     public class Startup
     {
-        private DiscordSocketClient _client;
         public Startup(IConfiguration configuration)
         {
             Configuration = configuration;
@@ -47,6 +50,32 @@ namespace Order66exe
 
             services.AddControllersWithViews();
             services.AddRazorPages();
+
+            /***GET SECRETS FROM AZURE***/
+            SecretClientOptions scOptions = new SecretClientOptions()
+            {
+                Retry =
+                {
+                    Delay = TimeSpan.FromSeconds(2),
+                    MaxDelay = TimeSpan.FromSeconds(5),
+                    MaxRetries = 3,
+                    Mode = RetryMode.Exponential
+                }
+            };
+
+            string keyVaultName = "FirstSecretVault";
+            var keyVaultUri = $"https://{keyVaultName}.vault.azure.net/";
+            var client = new SecretClient(new Uri(keyVaultUri), new DefaultAzureCredential(), scOptions);
+
+            const string CLIENT_ID_SECRET_NAME = "Discord-ClientID";
+            const string CLIENT_SECRET_SECRET_NAME = "Discord-ClientSecret";
+
+            KeyVaultSecret clientId_secret = client.GetSecret(CLIENT_ID_SECRET_NAME);
+            KeyVaultSecret clientSecret_secret = client.GetSecret(CLIENT_SECRET_SECRET_NAME);
+
+            string discordClientId = clientId_secret.Value;
+            string discordClientSecret = clientSecret_secret.Value;
+            /***END GET SECRETS***/
 
             /***START AUTHENTICATION METHODS***/
             //Authenticate on Startup
@@ -91,8 +120,8 @@ namespace Order66exe
 
                         options.CallbackPath = new PathString("/auth/oauthCallback");
 
-                        options.ClientId = Configuration.GetValue<string>("Discord:ClientId");
-                        options.ClientSecret = Configuration.GetValue<string>("Discord:ClientSecret");
+                        options.ClientId = discordClientId;
+                        options.ClientSecret = discordClientSecret;
 
                         options.TokenEndpoint = "https://discord.com/api/oauth2/token";
                         
@@ -166,6 +195,8 @@ namespace Order66exe
 
             app.UseAuthentication();
             app.UseAuthorization();
+
+
 
             app.UseEndpoints(endpoints =>
             {

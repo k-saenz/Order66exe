@@ -64,7 +64,7 @@ namespace Order66exe.Controllers
         }
 
         [Authorize(AuthenticationSchemes = "Discord")]
-        public async Task<IActionResult> Admin()
+        public IActionResult Admin()
         {
             //Get ID and Username of logged in user
             var userId = User.Claims.First(c => c.Type == ClaimTypes.NameIdentifier).Value;
