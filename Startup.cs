@@ -98,6 +98,7 @@ namespace Order66exe
                         //options.ClientId = Configuration.GetValue<string>("Discord:ClientId");
                         //options.ClientSecret = Configuration.GetValue<string>("Discord:ClientSecret");
 
+
                         options.ClientId = Environment.GetEnvironmentVariable("DISCORD_CLIENT_ID");
                         options.ClientSecret = Environment.GetEnvironmentVariable("DISCORD_CLIENT_SECRET");
 
@@ -159,6 +160,7 @@ namespace Order66exe
             {
                 app.UseDeveloperExceptionPage();
                 app.UseMigrationsEndPoint();
+
             }
             else
             {
