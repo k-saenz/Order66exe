@@ -1,4 +1,6 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Mvc;
+using Order66exe.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -8,14 +10,29 @@ namespace Order66exe.Controllers
 {
     public class AuthController : Controller
     {
-        public IActionResult Index()
+        private readonly SignInManager<DiscordUser> _signInManager;
+
+        public AuthController(SignInManager<DiscordUser> sManager)
         {
-            return View();
+            _signInManager = sManager;
         }
-        
-        public IActionResult OAuthCallback()
+
+        public async Task<IActionResult> OAuthCallback(string returnUrl = null)
         {
-            return View();
+            var info = await _signInManager.GetExternalLoginInfoAsync();
+
+            if (info == null)
+            {
+                return RedirectToAction(nameof(HomeController.AuthFailed));
+            }
+
+            var signInResult = await _signInManager.ExternalLoginSignInAsync(
+                info.LoginProvider,
+                info.ProviderKey,
+                isPersistent: false,
+                bypassTwoFactor: true);
+
+            return RedirectToAction(nameof(HomeController.Index));
         }
     }
 }

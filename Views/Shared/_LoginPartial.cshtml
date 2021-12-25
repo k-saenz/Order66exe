@@ -1,7 +1,7 @@
 ﻿@using Microsoft.AspNetCore.Identity
 @using System.Security.Claims; 
-@inject SignInManager<IdentityUser> SignInManager
-@inject UserManager<IdentityUser> UserManager
+@inject SignInManager<DiscordUser> SignInManager
+@inject UserManager<DiscordUser> UserManager
 
 @if (SignInManager.IsSignedIn(User))
 {
@@ -20,6 +20,6 @@
 else
 {
     <li class="nav-item mx-0 mx-lg-1">
-        <a class="nav-link py-3 px-0 px-lg-3 rounded" asp-controller="Home" asp-action="Login">Login</a>
+        <a class="nav-link py-3 px-0 px-lg-3 rounded" asp-controller="Login" asp-action="DiscordLogin">Login</a>
     </li>
 }

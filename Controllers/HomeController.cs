@@ -19,6 +19,7 @@ using System.IO;
 using Discord.WebSocket;
 using Newtonsoft.Json;
 using Discord;
+using Microsoft.AspNetCore.Identity;
 
 namespace Order66exe.Controllers
 {
@@ -26,29 +27,33 @@ namespace Order66exe.Controllers
     {
         private readonly ILogger<HomeController> _logger;
         private readonly IConfiguration _config;
-        private DiscordSocketClient _client;
+        private readonly SignInManager<DiscordUser> _signInManager;
 
-        public HomeController(ILogger<HomeController> logger, IConfiguration config)
+        public HomeController(ILogger<HomeController> logger, IConfiguration config, SignInManager<DiscordUser> sManager)
         {
             _logger = logger;
             _config = config;
+            _signInManager = sManager;
         }
 
         public IActionResult Index()
         {
-            //ViewBag.Username = GetUserName();
             return View();
         }
 
-        public IActionResult Info()
+        public async Task<IActionResult> InfoAsync()
         {
+            var info = await _signInManager.GetExternalLoginInfoAsync();
+            var result = await _signInManager.ExternalLoginSignInAsync(
+                info.LoginProvider,
+                info.ProviderKey,
+                isPersistent: false,
+                bypassTwoFactor: true);
+            if (result.Succeeded)
+            {
+                return LocalRedirect(nameof(AuthFailed));
+            }
             return View();
-        }
-
-        public IActionResult Login()
-        {
-            string redirectURI = _config.GetValue<string>("Discord:RedirectURI");
-            return Redirect(redirectURI);
         }
 
         [Authorize(AuthenticationSchemes = "Discord")]
@@ -64,6 +69,7 @@ namespace Order66exe.Controllers
             //Get ID and Username of logged in user
             var userId = User.Claims.First(c => c.Type == ClaimTypes.NameIdentifier).Value;
             var username = User.Claims.First(c => c.Type == ClaimTypes.Name).Value;
+
             ulong guildId = _config.GetValue<ulong>("Discord:GuildID");
             ulong userIdUlong = Convert.ToUInt64(userId);
 
@@ -93,35 +99,6 @@ namespace Order66exe.Controllers
         }
 
 
-        [HttpGet("GetToken")]
-        [Authorize(AuthenticationSchemes = "Discord")]
-        public string GetToken()
-        {
-            var userID = User.Claims.First(c => c.Type == ClaimTypes.NameIdentifier).Value;
-
-            //get values from configuration files
-            string key = _config.GetValue<string>("Jwt:EncryptionKey");
-            string issuer = _config.GetValue<string>("Jwt:Issuer");
-            string audience = _config.GetValue<string>("Jwt:Audience");
-
-            var securityKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(key));
-            var credentials = new SigningCredentials(securityKey, SecurityAlgorithms.HmacSha256);
-
-            var permClaims = new List<Claim>();
-            permClaims.Add(new Claim(JwtRegisteredClaimNames.Jti, Guid.NewGuid().ToString()));
-            permClaims.Add(new Claim("discordId", userID));
-
-            //Create JWT token
-            var token = new JwtSecurityToken(issuer, audience, permClaims,
-                expires: DateTime.Now.AddDays(7),
-                signingCredentials: credentials);
-
-            //Convert token to string
-            var jwt_token = new JwtSecurityTokenHandler().WriteToken(token);
-
-            return jwt_token;
-
-        }
 
     }
 }

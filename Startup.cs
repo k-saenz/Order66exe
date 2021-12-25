@@ -20,6 +20,7 @@ using System.Security.Claims;
 using System.Text;
 using System.Text.Json;
 using System.Threading.Tasks;
+using AspNet.Security.OAuth.Discord;
 
 namespace Order66exe
 {
@@ -41,7 +42,7 @@ namespace Order66exe
                     Configuration.GetConnectionString("DefaultConnection")));
             services.AddDatabaseDeveloperPageExceptionFilter();
 
-            services.AddDefaultIdentity<IdentityUser>(options => options.SignIn.RequireConfirmedAccount = true)
+            services.AddDefaultIdentity<DiscordUser>(options => options.SignIn.RequireConfirmedAccount = true)
                 .AddEntityFrameworkStores<ApplicationDbContext>();
 
             services.AddControllersWithViews();
@@ -75,8 +76,8 @@ namespace Order66exe
                         IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(Configuration.GetValue<string>("Jwt:EncryptionKey")))
                     };
                 })
-                .AddOAuth("Discord",
-                options =>
+                //.AddOAuth("Discord",
+                .AddDiscord(options =>
                     {
                         //Configure Discord related stuff
 
@@ -91,9 +92,10 @@ namespace Order66exe
                         options.CallbackPath = new PathString("/auth/oauthCallback");
 
                         options.ClientId = Configuration.GetValue<string>("Discord:ClientId");
-                        options.ClientSecret = Configuration.GetValue<string>("Discord:ClientSecret"); 
+                        options.ClientSecret = Configuration.GetValue<string>("Discord:ClientSecret");
 
                         options.TokenEndpoint = "https://discord.com/api/oauth2/token";
+                        
 
                         //Where to get info from
                         //Returns user object as JSON
@@ -106,8 +108,8 @@ namespace Order66exe
                         options.ClaimActions.MapJsonKey(ClaimTypes.NameIdentifier, "id");
                         options.ClaimActions.MapJsonKey(ClaimTypes.Name, "username");
                         //options.ClaimActions.MapJsonKey("Roles", "roles");
-                        options.ClaimActions.MapJsonKey("Discriminator", "discriminator");
-                        options.ClaimActions.MapJsonKey("Avatar", "avatar");
+                        options.ClaimActions.MapJsonKey(ClaimTypes.NameIdentifier, "discriminator");
+                        options.ClaimActions.MapJsonKey(ClaimTypes.Hash, "avatar");
 
                         //If user couldn't be authenticated to refused to authenticate, it send to this page
                         options.AccessDeniedPath = "/Home/AuthFailed";
@@ -144,7 +146,7 @@ namespace Order66exe
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
         {
-            app.UseAuthentication();
+            //app.UseAuthentication();
 
             if (env.IsDevelopment())
             {

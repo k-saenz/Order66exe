@@ -8,6 +8,11 @@ using System.Linq;
 using System.Security.Claims;
 using System.Text;
 using System.IdentityModel.Tokens.Jwt;
+using Microsoft.AspNetCore.Identity;
+using Order66exe.Models;
+using System.Threading.Tasks;
+using Microsoft.AspNetCore.Authentication;
+using Microsoft.AspNetCore.Authentication.OAuth;
 
 namespace Order66exe.Controllers
 {
@@ -16,15 +21,25 @@ namespace Order66exe.Controllers
     public class LoginController : ControllerBase
     {
         private readonly IConfiguration _config;
+        private readonly SignInManager<DiscordUser> _signInManager;
+        private readonly UserManager<DiscordUser> _userManager;
 
-        public LoginController(IConfiguration config)
+        public LoginController(IConfiguration config, SignInManager<DiscordUser> sManager, UserManager<DiscordUser> uManager)
         {
             _config = config;
+            _signInManager = sManager;
+            _userManager = uManager;
         }
 
-        [HttpGet("GetToken")]
+        [AllowAnonymous]
+        public IActionResult DiscordLogin(string returnUrl = null)
+        {
+            return Challenge(new AuthenticationProperties { RedirectUri = "/"}, "Discord");
+        }
+
+        [HttpPost("GetToken")]
         [Authorize(AuthenticationSchemes = "Discord")]
-        public object GetToken()
+        public string GetToken()
         {
             var userID = User.Claims.First(c => c.Type == ClaimTypes.NameIdentifier).Value;
 
@@ -48,10 +63,8 @@ namespace Order66exe.Controllers
             //Convert token to string
             var jwt_token = new JwtSecurityTokenHandler().WriteToken(token);
 
-            return new
-            {
-                ApiToken = jwt_token
-            };
+            return jwt_token;
+
         }
     }
 }
