@@ -187,4 +187,3 @@ C:\Users\Kevin\source\repos\Order66exe\bin\Debug\net5.0\Azure.Identity.dll
 C:\Users\Kevin\source\repos\Order66exe\bin\Debug\net5.0\Azure.Security.KeyVault.Secrets.dll
 C:\Users\Kevin\source\repos\Order66exe\bin\Debug\net5.0\Microsoft.Identity.Client.Extensions.Msal.dll
 C:\Users\Kevin\source\repos\Order66exe\bin\Debug\net5.0\System.Memory.Data.dll
-C:\Users\Kevin\source\repos\Order66exe\obj\Debug\net5.0\Order66exe.csproj.AssemblyReference.cache

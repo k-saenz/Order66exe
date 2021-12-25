@@ -52,37 +52,6 @@ namespace Order66exe
             services.AddControllersWithViews();
             services.AddRazorPages();
 
-            
-
-            /***GET SECRETS FROM AZURE***/
-            SecretClientOptions scOptions = new SecretClientOptions()
-            {
-                Retry =
-                {
-                    Delay = TimeSpan.FromSeconds(2),
-                    MaxDelay = TimeSpan.FromSeconds(5),
-                    MaxRetries = 3,
-                    Mode = RetryMode.Exponential
-                }
-            };
-
-            var keyVaultUriClientId = "https://firstsecretvault.vault.azure.net/secrets/Discord-ClientID/659ce9db9407484cb4d969f8b2d8f45d";
-            var keyVaultUriClientSecret = "https://firstsecretvault.vault.azure.net/secrets/Discord-ClientSecret/e8b1bbd867854c83a9b519e913553df2";
-
-            const string CLIENT_ID_SECRET_NAME = "Discord-ClientID";
-            const string CLIENT_SECRET_SECRET_NAME = "Discord-ClientSecret";
-
-            //Get Client ID
-            var client = new SecretClient(new Uri(keyVaultUriClientId), new DefaultAzureCredential(), scOptions);
-            KeyVaultSecret clientId_secret = client.GetSecret(CLIENT_ID_SECRET_NAME);
-            string discordClientId = clientId_secret.Value;
-
-            //Get Client Secret
-            client = new SecretClient(new Uri(keyVaultUriClientSecret), new DefaultAzureCredential(), scOptions);
-            KeyVaultSecret clientSecret_secret = client.GetSecret(CLIENT_SECRET_SECRET_NAME);
-            string discordClientSecret = clientSecret_secret.Value;
-            /***END GET SECRETS***/
-
             /***START AUTHENTICATION METHODS***/
             //Authenticate on Startup
             services.AddAuthentication(options =>
@@ -126,8 +95,11 @@ namespace Order66exe
 
                         options.CallbackPath = new PathString("/auth/oauthCallback");
 
-                        options.ClientId = discordClientId;
-                        options.ClientSecret = discordClientSecret;
+                        //options.ClientId = Configuration.GetValue<string>("Discord:ClientId");
+                        //options.ClientSecret = Configuration.GetValue<string>("Discord:ClientSecret");
+
+                        options.ClientId = Environment.GetEnvironmentVariable("DISCORD_CLIENT_ID");
+                        options.ClientSecret = Environment.GetEnvironmentVariable("DISCORD_CLIENT_SECRET");
 
                         options.TokenEndpoint = "https://discord.com/api/oauth2/token";
                         
@@ -175,7 +147,7 @@ namespace Order66exe
             /***END AUTHENTICATION METHODS***/
 
             //START DISCORD BOT
-            DiscordUtils.StartBot(Configuration.GetValue<string>("Discord:BotToken"));
+            DiscordUtils.StartBot(Environment.GetEnvironmentVariable("DISCORD_BOT_TOKEN"));
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
