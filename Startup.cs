@@ -95,9 +95,8 @@ namespace Order66exe
 
                         options.CallbackPath = new PathString("/auth/oauthCallback");
 
-                        //options.ClientId = Configuration.GetValue<string>("Discord:ClientId");
-                        //options.ClientSecret = Configuration.GetValue<string>("Discord:ClientSecret");
-
+                        Environment.SetEnvironmentVariable("DISCORD_CLIENT_ID", Configuration.GetValue<string>("Discord:ClientId"));
+                        Environment.SetEnvironmentVariable("DISCORD_CLIENT_SECRET", Configuration.GetValue<string>("Discord:ClientSecret"));
 
                         options.ClientId = Environment.GetEnvironmentVariable("DISCORD_CLIENT_ID");
                         options.ClientSecret = Environment.GetEnvironmentVariable("DISCORD_CLIENT_SECRET");
