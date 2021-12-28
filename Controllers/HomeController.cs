@@ -41,18 +41,23 @@ namespace Order66exe.Controllers
             return View();
         }
 
-        public async Task<IActionResult> InfoAsync()
+        //public async Task<IActionResult> InfoAsync()
+        //{
+        //    var info = await _signInManager.GetExternalLoginInfoAsync();
+        //    var result = await _signInManager.ExternalLoginSignInAsync(
+        //        info.LoginProvider,
+        //        info.ProviderKey,
+        //        isPersistent: false,
+        //        bypassTwoFactor: true);
+        //    if (result.Succeeded)
+        //    {
+        //        return LocalRedirect(nameof(AuthFailed));
+        //    }
+        //    return View();
+        //}
+
+        public IActionResult Info()
         {
-            var info = await _signInManager.GetExternalLoginInfoAsync();
-            var result = await _signInManager.ExternalLoginSignInAsync(
-                info.LoginProvider,
-                info.ProviderKey,
-                isPersistent: false,
-                bypassTwoFactor: true);
-            if (result.Succeeded)
-            {
-                return LocalRedirect(nameof(AuthFailed));
-            }
             return View();
         }
 

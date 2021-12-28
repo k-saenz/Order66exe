@@ -95,11 +95,8 @@ namespace Order66exe
 
                         options.CallbackPath = new PathString("/auth/oauthCallback");
 
-                        Environment.SetEnvironmentVariable("DISCORD_CLIENT_ID", Configuration.GetValue<string>("Discord:ClientId"));
-                        Environment.SetEnvironmentVariable("DISCORD_CLIENT_SECRET", Configuration.GetValue<string>("Discord:ClientSecret"));
-
-                        options.ClientId = Environment.GetEnvironmentVariable("DISCORD_CLIENT_ID");
-                        options.ClientSecret = Environment.GetEnvironmentVariable("DISCORD_CLIENT_SECRET");
+                        options.ClientId = Configuration.GetValue<string>("Discord:ClientId");
+                        options.ClientSecret = Configuration.GetValue<string>("Discord:ClientSecret");
 
                         options.TokenEndpoint = "https://discord.com/api/oauth2/token";
                         
@@ -147,7 +144,7 @@ namespace Order66exe
             /***END AUTHENTICATION METHODS***/
 
             //START DISCORD BOT
-            DiscordUtils.StartBot(Environment.GetEnvironmentVariable("DISCORD_BOT_TOKEN"));
+            DiscordUtils.StartBot(Configuration.GetValue<string>("Discord:BotToken"));
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
