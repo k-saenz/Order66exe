@@ -19,7 +19,7 @@ jobs:
       - name: App Settings Variable Substitution
         uses: microsoft/variable-substitution@v1
         with:
-          files: ${{env.DOTNET_ROOT}}/myapp/appsettings.json
+          files: appsettings.json
         env:
           Discord.ClientID: ${{secrets.DISCORD_CLIENT_ID}}
           Discord.ClientSecret: ${{secrets.DISCORD_CLIENT_SECRET}}
