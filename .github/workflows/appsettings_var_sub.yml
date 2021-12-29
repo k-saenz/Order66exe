@@ -1,0 +1,19 @@
+on: push
+name: Var Substitution AppSettings
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      
+      - uses: microsoft/variable-substitution@v1 
+        with:
+          files: 'appsettings.Production.json'
+    env:
+          Discord.ClientID: ${{secrets.DISCORD_CLIENT_ID}}
+          Discord.ClientSecret: ${{secrets.DISCORD_CLIENT_SECRET}}
+          Discord.BotToken: ${{secrets.DISCORD_BOT_TOKEN}}
+          Discord.RedirectUri: ${{secrets.DISCORD_REDIRECT_URI}}
+          Discord.GuildId: ${{secrets.DISCORD_GUILD_IDS}}
+          Jwt.EncryptionKey: ${{secrets.JWT_ENCRYPTION_KEY}}
