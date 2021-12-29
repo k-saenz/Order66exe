@@ -16,6 +16,15 @@ jobs:
     steps:
       - uses: actions/checkout@v2
 
+      - name: App Settings Variable Substitution
+        uses: microsoft/variable-substitution@v1
+        with:
+          files: ${{env.DOTNET_ROOT}}/myapp/appsettings.json
+        env:
+          Discord.ClientID: ${{secrets.DISCORD_CLIENT_ID}}
+          Discord.ClientSecret: ${{secrets.DISCORD_CLIENT_SECRET}}
+          Discord.BotToken: ${{secrets.DISCORD_BOT_TOKEN}}
+
       - name: Set up .NET Core
         uses: actions/setup-dotnet@v1
         with:
