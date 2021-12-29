@@ -75,7 +75,7 @@ namespace Order66exe.Controllers
             var userId = User.Claims.First(c => c.Type == ClaimTypes.NameIdentifier).Value;
             var username = User.Claims.First(c => c.Type == ClaimTypes.Name).Value;
 
-            ulong guildId = _config.GetValue<ulong>("Discord:GuildID");
+            ulong guildId = _config.GetValue<ulong>("Discord:GuildId");
             ulong userIdUlong = Convert.ToUInt64(userId);
 
             DiscordUtils util = new DiscordUtils(guildId, userIdUlong);

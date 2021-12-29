@@ -24,6 +24,9 @@ jobs:
           Discord.ClientID: ${{secrets.DISCORD_CLIENT_ID}}
           Discord.ClientSecret: ${{secrets.DISCORD_CLIENT_SECRET}}
           Discord.BotToken: ${{secrets.DISCORD_BOT_TOKEN}}
+          Discord.RedirectUri: ${{secrets.DISCORD_REDIRECT_URI}}
+          Discord.GuildId: ${{secrets.DISCORD_GUILD_IDS}}
+          Jwt.EncryptionKey: ${{secrets.JWT_ENCRYPTION_KEY}}
 
       - name: Set up .NET Core
         uses: actions/setup-dotnet@v1
