@@ -72,7 +72,7 @@ namespace Order66exe.Controllers
         public IActionResult Events()
         {
 
-            return View();
+            return Unauthorized();
         }
 
         [Authorize(AuthenticationSchemes = "Discord")]
