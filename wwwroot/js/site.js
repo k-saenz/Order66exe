@@ -1,4 +1,4 @@
-﻿
+
 
 //jQuery Doc Load Ready Evt Listener
 $(document).ready(() => {
@@ -47,5 +47,21 @@ $(document).ready(() => {
     // Activate SimpleLightbox plugin for portfolio items
     new SimpleLightbox({
         elements: '#portfolio a.portfolio-box'
+    });
+
+    //Change header text in Info page when accordion element is expanded
+    //Change back to 'Rules and Stuff' when collapsed
+    let rulesAndStuff = $("#InfoAccordian .accordion-item h2").click( evt => {
+        let rulesBtn = $(evt.target).text();
+        let generalRules = "These rules apply to any part of the server, whether that be voice or text channel";
+        let voiceRules = "In addition to the General Rules, follow these when joining a Voice Channel";
+        let roles = "Current Roles that users can have in our server";
+
+        if (!$(evt.target).hasClass("collapsed")) {
+            $("#RulesAndStuffHeader").text(rulesBtn);
+            $("#RulesAndStuffInfo").text();
+        } else {
+            $("#RulesAndStuffHeader").text("Rules and Stuff");
+        }
     });
 });

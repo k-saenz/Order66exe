@@ -1,4 +1,5 @@
-﻿@{
+﻿@model List<Discord.WebSocket.SocketRole>
+@{
     ViewData["Title"] = "Server Rules";
 }
 
@@ -17,33 +18,40 @@
     </div>
 </header>
 
-<!--TODO: Make rule selection list as wide as the page-->
-<!--TODO: Format rules list that appears when list item is clicked so it appears centered and prettier-->
-
 <!-- About Section-->
 <section class="page-section bg-primary" id="infoTitle">
-    <div class="container ">
-        <div class="col-4">
-            <div class="list-group" id="list-tab" role="tablist">
-                <a class="list-group-item list-group-item-action active" id="list-general-list" data-toggle="list" href="#list-general" role="tab" aria-controls="general">General Rules</a>
-                <a class="list-group-item list-group-item-action" id="list-voice-list" data-toggle="list" href="#list-voice" role="tab" aria-controls="voice">Voice Chat</a>
-                <a class="list-group-item list-group-item-action" id="list-messages-list" data-toggle="list" href="#list-messages" role="tab" aria-controls="messages">Contact</a>
-                <a class="list-group-item list-group-item-action" id="list-settings-list" data-toggle="list" href="#list-settings" role="tab" aria-controls="settings">Settings</a>
+    <div class="container px-4 px-lg-5">
+        <div class="row gx-4 gx-lg-5 justify-content-center">
+            <div class="col-lg-8 text-center">
+                <h2 class="text-white mt-0">Rules and Stuff</h2>
+                <hr class="divider divider-light" />
+                <p class="text-white-75 mb-4">Before you join, we ask that you read and understand the rules you see here. We all want to have fun, but we also want to stay safe and not hurt anybody's feelings IRL</p>
             </div>
         </div>
     </div>
 </section>
 
-
 <!--Rules list-->
-<div class="container-lg my-1 px-0 px-lg-5">
-    <div class="justify-content-center">
-        <div class="col-8">
-            <div class="tab-content" id="nav-tabContent">
-                <div class="tab-pane fade show active" id="list-general" role="tabpanel" aria-labelledby="list-general-list">
-                    <h2>General Rules</h2>
-                    <h5>These rules apply to any part of the server, whether that be voice or text channel</h5>
 
+<div class="accordion-container row align-items-center">
+    <div class="col-lg-4 text-center card">
+        <div class="card-body">
+
+            <h2 class="text-black mt-0" id="RulesAndStuffHeader">Rules and Stuff</h2>
+            <hr class="divider" />
+            <h4 class="text-black-50 mt-0" id="RulesAndStuffInfo">Select a topic to learn more</h4>
+        </div>
+    </div>
+    <div class="accordion accordion-flush col-lg-8" id="InfoAccordian">
+        <div class="accordion-item">
+            <h2 class="accordion-header" id="GeneralRulesHeading">
+                <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#GeneralRulesCollapse" aria-expanded="false" aria-controls="GeneralRulesCollapse">
+                    General Rules
+                </button>
+            </h2>
+
+            <div id="GeneralRulesCollapse" class="accordion-collapse collapse" aria-labelledby="GeneralRulesHeading" data-bs-parent="#InfoAccordian">
+                <div class="accordion-body">
                     <ol class="list-group list-group-flush">
                         <li class="list-group-item">Keep everything PG - bad words and other inappropriate language/content will be deleted and can lead to mute, kick, or ban</li>
                         <li class="list-group-item">No racism, discrimination, toxic behavior, or hate speech in any way, shape, or form</li>
@@ -57,19 +65,52 @@
                         <li class="list-group-item">If someone asks you to "stop", please do so</li>
                     </ol>
                 </div>
+            </div>
+        </div>
 
-                <div class="tab-pane fade" id="list-voice" role="tabpanel" aria-labelledby="list-voice-list">
-                    <h2>Voice Chat Rules</h2>
-                    <h3>In addition </h3>
+        <div class="accordion-item">
+            <h2 class="accordion-header" id="VoiceRulesHeading">
+                <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#VoiceRulesCollapse" aria-expanded="false" aria-controls="VoiceRulesCollapse">
+                    Voice Chat Rules
+                </button>
+            </h2>
+
+            <div id="VoiceRulesCollapse" class="accordion-collapse collapse" aria-labelledby="VoiceRulesHeading" data-bs-parent="#InfoAccordian">
+                <div class="accordion-body">
                     <ol class="list-group list-group-flush">
                         <li class="list-group-item">Unless everyone in the call is okay with it, please keep music in its respective channel</li>
                         <li class="list-group-item">Think before you <span class="font-italic">earrape</span> (aka being too loud). We don't have a problem with it for the most part, but it can get annoying if overdone</li>
                         <li class="list-group-item">Depending on the occasion, you and the participants in a call may want to turn on your cameras and/or share your screen. It is purely up to each individual to decide if they want to show their face or not, and what they want us to see on their screen</li>
                     </ol>
                 </div>
-                <div class="tab-pane fade" id="list-messages" role="tabpanel" aria-labelledby="list-messages-list">...</div>
-                <div class="tab-pane fade" id="list-settings" role="tabpanel" aria-labelledby="list-settings-list">...</div>
+            </div>
+        </div>
+
+        <div class="accordion-item">
+            <h2 class="accordion-header" id="RolesHeading">
+                <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#RolesCollapse" aria-expanded="false" aria-controls="RolesCollapse">
+                    Server Roles
+                </button>
+            </h2>
+
+            <div id="RolesCollapse" class="accordion-collapse collapse" aria-labelledby="RolesHeading" data-bs-parent="#InfoAccordian">
+                <div class="accordion-body">
+                    <ul>
+                        @foreach (var item in Model)
+                        {
+                            <li class="list-group-item" style="color: @item.Color">@item.Name</li>
+                        }
+                    </ul>
+
+                </div>
             </div>
         </div>
     </div>
 </div>
+
+
+
+
+
+
+

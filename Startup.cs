@@ -83,7 +83,7 @@ namespace Order66exe
                 //.AddOAuth("Discord",
                 .AddDiscord(options =>
                     {
-                        //Configure Discord related stuff
+                        //Configure Discord related Login
 
                         //Where to authorize
                         options.AuthorizationEndpoint = "https://discord.com/api/oauth2/authorize";

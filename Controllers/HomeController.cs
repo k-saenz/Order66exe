@@ -38,6 +38,7 @@ namespace Order66exe.Controllers
 
         public IActionResult Index()
         {
+            
             return View();
         }
 
@@ -58,7 +59,13 @@ namespace Order66exe.Controllers
 
         public IActionResult Info()
         {
-            return View();
+
+            ulong guildId = _config.GetValue<ulong>("Discord:GuildId");
+            var util = new DiscordUtils(guildId);
+            util.GetAdmins(690944722557993051);
+
+            List<SocketRole> roles = util.GetGuildRoles();
+            return View(roles);
         }
 
         [Authorize(AuthenticationSchemes = "Discord")]
@@ -73,16 +80,12 @@ namespace Order66exe.Controllers
         {
             //Get ID and Username of logged in user
             var userId = User.Claims.First(c => c.Type == ClaimTypes.NameIdentifier).Value;
-            var username = User.Claims.First(c => c.Type == ClaimTypes.Name).Value;
-
-            ulong guildId = _config.GetValue<ulong>("Discord:GuildId");
             ulong userIdUlong = Convert.ToUInt64(userId);
+            ulong guildId = _config.GetValue<ulong>("Discord:GuildId");
 
-            DiscordUtils util = new DiscordUtils(guildId, userIdUlong);
+            DiscordUtils _util = new DiscordUtils(guildId, userIdUlong);
 
-            List<string> roles = util.UserRoles();
-
-            if (!util.IsAdmin())
+            if (!_util.IsAdmin())
             {
                 return Unauthorized();
             }
@@ -103,7 +106,20 @@ namespace Order66exe.Controllers
             return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
         }
 
+        public ActionResult SetAdminUsernames()
+        {
+            DiscordUtils utils = new();
+            var admins = utils.GetAdmins(690944722557993051);
 
+            foreach (var item in admins)
+            {
+                ViewBag.AvatarUrl(item.GetGuildAvatarUrl());
+                ViewBag.Username(item.Username);
+                ViewBag.Discriminator(item.Discriminator);
+            }
+
+            return PartialView("_SetAdminUsernames");
+        }
 
     }
 }

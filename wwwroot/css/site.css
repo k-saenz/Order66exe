@@ -1666,3 +1666,12 @@ header.masthead {
 .copyright {
     background-color: #1a252f;
 }
+
+.accordion-container {
+    padding: 1.5rem;
+    margin-right: 0;
+    margin-left: 0;
+    border-width: 1px;
+    border-top-left-radius: .25rem;
+    border-top-right-radius: .25rem;
+}

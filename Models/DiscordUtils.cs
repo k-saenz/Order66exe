@@ -17,11 +17,17 @@ namespace Order66exe.Models
         private static SocketGuild _guild;
         private static SocketGuildUser _user;
 
+        public DiscordUtils() { }
+
         public DiscordUtils(ulong guildId, ulong userId)
         {
-            //_guild returning null atm ?????
             _guild = _client.GetGuild(guildId);
             _user = _guild.GetUser(userId);
+        }
+
+        public DiscordUtils(ulong guildId)
+        {
+            _guild = _client.GetGuild(guildId);
         }
 
         public static async Task StartBot(string token)
@@ -47,18 +53,44 @@ namespace Order66exe.Models
 
         public bool IsAdmin()
         {
-            List<string> roles = UserRoles();
-
-            string adminRole = "sandwich overlords";
-
-            if (!roles.Contains(adminRole))
-            {
-                return false;
-            }
-            else
+            if (_user.Roles.Any(r => r.Id == 690944722557993051))
             {
                 return true;
             }
+            return false;
+        }
+
+        public List<SocketRole> GetGuildRoles()
+        {
+            var guildroles = _guild.Roles;
+
+            List<SocketRole> roles = new();
+
+            foreach (var item in guildroles)
+            {
+                if (item.IsEveryone || !item.IsHoisted)
+                {
+                    continue;
+                }
+                roles.Add(item);
+                
+            }
+
+            return roles;
+        }
+
+        public IEnumerable<SocketGuildUser> GetAdmins(ulong adminId)
+        {
+            var adminrole = _guild.GetRole(adminId);
+
+            foreach (var item in adminrole.Members)
+            {
+                Console.WriteLine("Avatar Id: " + item.AvatarId + "\n" +
+                    "Avatar Url" + item.GetGuildAvatarUrl() + "\n" +
+                    "username: " + item.Username);
+            }
+
+            return adminrole.Members;
         }
     }
 }
