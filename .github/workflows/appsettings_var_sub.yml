@@ -9,7 +9,7 @@ jobs:
       
       - uses: microsoft/variable-substitution@v1 
         with:
-          files: 'appsettings.Production.json'
+          files: 'appsettings.json'
     env:
           Discord.ClientID: ${{secrets.DISCORD_CLIENT_ID}}
           Discord.ClientSecret: ${{secrets.DISCORD_CLIENT_SECRET}}
@@ -17,3 +17,5 @@ jobs:
           Discord.RedirectUri: ${{secrets.DISCORD_REDIRECT_URI}}
           Discord.GuildId: ${{secrets.DISCORD_GUILD_IDS}}
           Jwt.EncryptionKey: ${{secrets.JWT_ENCRYPTION_KEY}}
+          Jwt.Issuer: 'https://order66exe.com/'
+          Jwt.Audience: 'https://order66exe.com/'
