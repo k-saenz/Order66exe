@@ -187,3 +187,4 @@ C:\Users\Kevin\source\repos\Order66exe\obj\Debug\net5.0\ref\Order66exe.dll
 C:\Users\Kevin\source\repos\Order66exe\obj\Debug\net5.0\Order66exe.pdb
 C:\Users\Kevin\source\repos\Order66exe\obj\Debug\net5.0\Order66exe.genruntimeconfig.cache
 C:\Users\Kevin\source\repos\Order66exe\obj\Debug\net5.0\Razor\Views\Shared\_SetAdminUsernames.cshtml.g.cs
+C:\Users\Kevin\source\repos\Order66exe\obj\Debug\net5.0\Order66exe.csproj.AssemblyReference.cache
