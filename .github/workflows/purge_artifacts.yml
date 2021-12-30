@@ -1,7 +1,6 @@
-name: 'nightly artifacts cleanup'
+name: 'Delete old artifacts'
 on:
   workflow_dispatch:
-  
 
 jobs:
   delete-artifacts:
@@ -9,5 +8,5 @@ jobs:
     steps:
       - uses: kolpav/purge-artifacts-action@v1
         with:
-          token: $
-          expire-in: 7days # Set this to 0 to delete all artifacts
+          token: ${{ secrets.GITHUB_TOKEN }}
+          expire-in: 14days # Setting this to 0 will delete all artifacts
