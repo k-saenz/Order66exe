@@ -60,11 +60,17 @@ namespace Order66exe.Controllers
         public IActionResult Info()
         {
 
+            /* COMMENTED FOR TESTING
+             * REMOVE ONCE FINISHED************
             ulong guildId = _config.GetValue<ulong>("Discord:GuildId");
             var util = new DiscordUtils(guildId);
             util.GetAdmins(690944722557993051);
-
             List<SocketRole> roles = util.GetGuildRoles();
+            
+            return View(roles);
+            */
+            List<SocketRole> roles = new();
+
             return View(roles);
         }
 
