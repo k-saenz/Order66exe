@@ -12,6 +12,11 @@ namespace Order66exe.Models
 {
     public class DiscordUtils
     {
+        /*****************
+         * DEPRICATED, BOT WILL NO LONGER START WITH APP
+         * CREATE API AND HOST ON AZURE
+         * MAKE REQUESTS FROM THERE
+         *****************/
 
         private static DiscordSocketClient _client = new DiscordSocketClient();
         private static SocketGuild _guild;

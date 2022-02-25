@@ -1,4 +1,3 @@
-using Discord.WebSocket;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
@@ -6,7 +5,7 @@ using Microsoft.AspNetCore.Authentication.OAuth;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.HttpOverrides;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
@@ -19,13 +18,6 @@ using System.Net.Http.Headers;
 using System.Security.Claims;
 using System.Text;
 using System.Text.Json;
-using System.Threading.Tasks;
-using AspNet.Security.OAuth.Discord;
-using Azure.Identity;
-using Azure.Security.KeyVault.Secrets;
-using Azure.Core;
-using System;
-using System.Collections.Generic;
 
 namespace Order66exe
 {
@@ -142,9 +134,6 @@ namespace Order66exe
                     }
                 );
             /***END AUTHENTICATION METHODS***/
-
-            //START DISCORD BOT
-            DiscordUtils.StartBot(Configuration.GetValue<string>("Discord:BotToken"));
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -168,6 +157,11 @@ namespace Order66exe
             app.UseStaticFiles();
 
             app.UseRouting();
+
+            app.UseForwardedHeaders(new ForwardedHeadersOptions
+            {
+                ForwardedHeaders = ForwardedHeaders.XForwardedFor | ForwardedHeaders.XForwardedProto
+            });
 
             app.UseAuthentication();
             app.UseAuthorization();
