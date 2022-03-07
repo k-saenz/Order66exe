@@ -1,8 +1,8 @@
 {
   "version": 2,
-  "dgSpecHash": "Gl1CTkPgRSUgmVIY1De+6vyqwkPdKwj1dOKLXKP6LCQ0/qKI7gwNRQRYxNol1m27+vH9suGT649RNlimlAvatQ==",
+  "dgSpecHash": "eJHNCip1Fl/Xu8EFnZ83jAuUSBNt2hFYfAOkeX+vcpdeP7D7RbptHoh+C6um4/mXvKsDs2ksCyRTxDKG+pz0kg==",
   "success": true,
-  "projectFilePath": "C:\\Users\\Kevin\\source\\repos\\Order66exe\\Order66exe.csproj",
+  "projectFilePath": "C:\\Users\\Kevin\\source\\repos\\Order66exe v1.1\\Order66exe.csproj",
   "expectedPackageFiles": [
     "C:\\Users\\Kevin\\.nuget\\packages\\aspnet.security.oauth.discord\\5.0.18\\aspnet.security.oauth.discord.5.0.18.nupkg.sha512",
     "C:\\Users\\Kevin\\.nuget\\packages\\azure.core\\1.20.0\\azure.core.1.20.0.nupkg.sha512",

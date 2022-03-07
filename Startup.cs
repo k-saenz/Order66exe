@@ -87,8 +87,10 @@ namespace Order66exe
 
                         options.CallbackPath = new PathString("/auth/oauthCallback");
 
-                        options.ClientId = Configuration.GetValue<string>("Discord:ClientId");
-                        options.ClientSecret = Configuration.GetValue<string>("Discord:ClientSecret");
+                        IConfigurationSection discordAuthSection = Configuration.GetSection("Authentication:Discord");
+
+                        options.ClientId = discordAuthSection["ClientId"];
+                        options.ClientSecret = discordAuthSection["ClientSecret"];
 
                         options.TokenEndpoint = "https://discord.com/api/oauth2/token";
                         
