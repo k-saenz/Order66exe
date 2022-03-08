@@ -38,6 +38,7 @@ namespace Order66exe.Controllers
 
         public IActionResult Index()
         {
+
             
             return View();
         }

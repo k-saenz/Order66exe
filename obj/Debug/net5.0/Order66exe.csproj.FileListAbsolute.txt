@@ -556,7 +556,6 @@ C:\Users\Kevin\source\repos\Order66exe v1.1\obj\Debug\net5.0\Razor\Views\Login\O
 C:\Users\Kevin\source\repos\Order66exe v1.1\obj\Debug\net5.0\Razor\Views\Shared\Error.cshtml.g.cs
 C:\Users\Kevin\source\repos\Order66exe v1.1\obj\Debug\net5.0\Razor\Views\Shared\_Layout.cshtml.g.cs
 C:\Users\Kevin\source\repos\Order66exe v1.1\obj\Debug\net5.0\Razor\Views\Shared\_LoginPartial.cshtml.g.cs
-C:\Users\Kevin\source\repos\Order66exe v1.1\obj\Debug\net5.0\Razor\Views\Shared\_SetAdminUsernames.cshtml.g.cs
 C:\Users\Kevin\source\repos\Order66exe v1.1\obj\Debug\net5.0\Razor\Views\Shared\_ValidationScriptsPartial.cshtml.g.cs
 C:\Users\Kevin\source\repos\Order66exe v1.1\obj\Debug\net5.0\Razor\Views\_ViewImports.cshtml.g.cs
 C:\Users\Kevin\source\repos\Order66exe v1.1\obj\Debug\net5.0\Razor\Views\_ViewStart.cshtml.g.cs
@@ -569,3 +568,4 @@ C:\Users\Kevin\source\repos\Order66exe v1.1\obj\Debug\net5.0\refint\Order66exe.d
 C:\Users\Kevin\source\repos\Order66exe v1.1\obj\Debug\net5.0\Order66exe.pdb
 C:\Users\Kevin\source\repos\Order66exe v1.1\obj\Debug\net5.0\Order66exe.genruntimeconfig.cache
 C:\Users\Kevin\source\repos\Order66exe v1.1\obj\Debug\net5.0\ref\Order66exe.dll
+C:\Users\Kevin\source\repos\Order66exe v1.1\obj\Debug\net5.0\Razor\Views\Shared\_FooterPartial.cshtml.g.cs

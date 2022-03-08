@@ -130,6 +130,7 @@ namespace Order66exe
                                 //Get the user from the response
                                 var user = JsonDocument.Parse(await response.Content.ReadAsStringAsync()).RootElement;
 
+                                //Runs claim actions specified previously
                                 context.RunClaimActions(user);
                             }
                         };
