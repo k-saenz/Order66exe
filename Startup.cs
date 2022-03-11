@@ -68,7 +68,7 @@ namespace Order66exe
 
                         //Get data from appsettings.json
                         ValidIssuer = Configuration.GetValue<string>("Jwt:Issuer"),
-                        ValidAudience = Configuration.GetValue<string>("Jst:Audience"),
+                        ValidAudience = Configuration.GetValue<string>("Jwt:Audience"),
                         IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(Configuration.GetValue<string>("Jwt:EncryptionKey")))
                     };
                 })
@@ -109,7 +109,7 @@ namespace Order66exe
                         options.ClaimActions.MapJsonKey(ClaimTypes.NameIdentifier, "discriminator");
                         options.ClaimActions.MapJsonKey(ClaimTypes.Hash, "avatar");
 
-                        //If user couldn't be authenticated to refused to authenticate, it send to this page
+                        //If user couldn't be authenticated or refused to authenticate, it redirects to this page
                         options.AccessDeniedPath = "/Home/AuthFailed";
 
                         //After getting temp token, then ask for token, then ask for user info
@@ -152,7 +152,8 @@ namespace Order66exe
             }
             else
             {
-                app.UseExceptionHandler("/Home/Error");
+                app.UseDeveloperExceptionPage();
+                //app.UseExceptionHandler("/Home/Error");
                 // The default HSTS value is 30 days. You may want to change this for production scenarios, see https://aka.ms/aspnetcore-hsts.
                 app.UseHsts();
             }
