@@ -30,6 +30,8 @@
     <link href="~/lib/bootstrap/dist/css/bootstrap.css" rel="stylesheet" />
     <link href="~/css/login.css" rel="stylesheet" />
 
+    <link rel="icon" href="~/pepe.ico">
+
 </head>
 
 <body class="bg-gradient-primary">
@@ -83,7 +85,7 @@
                                         <div class="alt-login">
                                             @foreach (var provider in Model.ExternalLogins)
                                             {
-                                                <button type="submit" class="btn btn-@provider.DisplayName.ToLower() btn-user btn-block" value="@provider.DisplayName">
+                                                <button type="submit" class="btn btn-@provider.DisplayName.ToLower() btn-user btn-block" value="@provider.Name" name="provider">
                                                     <i class="fab fa-@provider.DisplayName.ToLower() fa-fw"></i> Login with @provider.DisplayName
                                                 </button>
                                             }
