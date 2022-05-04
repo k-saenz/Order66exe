@@ -5,8 +5,8 @@ namespace Order66exe.Models
     public class DiscordUser : IdentityUser
     {
         [PersonalData]
-        public string? Discriminator { get; set; }
+        public string Discriminator { get; set; }
         [PersonalData]
-        public string? AvatarHash { get; set; }
+        public string AvatarHash { get; set; }
     }
 }

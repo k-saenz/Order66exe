@@ -93,10 +93,10 @@
                                     </form>
                                     <hr>
                                     <div class="text-center">
-                                        <a class="small" asp-page="./ForgotPassword">Forgot Password?</a>
+                                        <a class="small" asp-area="Identity" asp-page="/Account/ForgotPassword">Forgot Password?</a>
                                     </div>
                                     <div class="text-center">
-                                        <a class="small" asp-page="./Register" asp-route-returnUrl="@Model.ReturnUrl">Create an Account!</a>
+                                        <a class="small" asp-area="Identity" asp-page="/Account/Register" asp-route-returnUrl="@Model.ReturnUrl">Create an Account!</a>
                                     </div>
                                 </div>
                             </div>

@@ -47,24 +47,24 @@
                             <form class="user" asp-route-returnUrl="@Model.ReturnUrl" method="post">
                                 <div class="form-group">
                                     <input type="text" class="form-control form-control-user" id="registerUsername"
-                                           placeholder="Email Address" asp-for="Input.Email">
-                                    <span asp-validation-for="Input.Email"></span>
+                                           placeholder="Username" asp-for="Input.UserName">
+                                    <span asp-validation-for="Input.UserName" class="text-danger"></span>
                                 </div>
                                 <div class="form-group">
                                     <input type="email" class="form-control form-control-user" id="registerEmail"
                                            placeholder="Email Address" asp-for="Input.Email">
-                                    <span asp-validation-for="Input.Email"></span>
+                                    <span asp-validation-for="Input.Email" class="text-danger"></span>
                                 </div>
                                 <div class="form-group row">
                                     <div class="col-sm-6 mb-3 mb-sm-0">
                                         <input type="password" class="form-control form-control-user"
                                                id="registerPassword" placeholder="Password" asp-for="Input.Password">
-                                        <span asp-validation-for="Input.Password"></span>
+                                        <span asp-validation-for="Input.Password" class="text-danger"></span>
                                     </div>
                                     <div class="col-sm-6">
                                         <input type="password" class="form-control form-control-user"
                                                id="registerRepeatPassword" placeholder="Repeat Password" asp-for="Input.ConfirmPassword">
-                                        <span asp-validation-for="Input.ConfirmPassword"></span>
+                                        <span asp-validation-for="Input.ConfirmPassword" class="text-danger"></span>
                                     </div>
                                 </div>
                                 <button type="submit" class="btn btn-primary btn-user btn-block">
@@ -85,8 +85,6 @@
                                     </button>
                                 }
                             </form>
-
-
 
                             <hr>
                             <div class="text-center">
