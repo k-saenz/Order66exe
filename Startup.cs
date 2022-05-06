@@ -7,6 +7,7 @@ using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.HttpOverrides;
 using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Identity.UI.Services;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
@@ -14,6 +15,7 @@ using Microsoft.Extensions.Hosting;
 using Microsoft.IdentityModel.Tokens;
 using Order66exe.Data;
 using Order66exe.Models;
+using Order66exe.Models.Services;
 using System.Net.Http;
 using System.Net.Http.Headers;
 using System.Security.Claims;
@@ -47,6 +49,11 @@ namespace Order66exe
             services.AddControllersWithViews();
             services.AddRazorPages();
 
+            //Add email config
+            services.AddTransient<IEmailSender, EmailSender>();
+            services.Configure<AuthMessageSenderOptions>(Configuration);
+
+
             /***START AUTHENTICATION METHODS***/
 
             ///<summary>
@@ -60,6 +67,7 @@ namespace Order66exe
                     options.ClientSecret = Configuration.GetValue<string>("Authentication:Discord:ClientSecret");
                     options.Scope.Add("identify");
                     options.Scope.Add("email");
+                    options.Scope.Add("guild.members.read");
                     options.AuthorizationEndpoint = "https://discord.com/api/oauth2/authorize";
 
                 })
