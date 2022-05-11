@@ -9,7 +9,7 @@ using Order66exe.Data;
 
 namespace Order66exe.Data.Migrations
 {
-    [DbContext(typeof(ApplicationDbContext))]
+    [DbContext(typeof(Order66DbContext))]
     [Migration("20220322013421_DiscordUserMigration")]
     partial class DiscordUserMigration
     {

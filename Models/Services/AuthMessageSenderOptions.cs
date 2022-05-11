@@ -1,4 +1,5 @@
-﻿using System;
+﻿#nullable enable
+using System;
 
 namespace Order66exe.Models.Services
 {
@@ -9,7 +10,7 @@ namespace Order66exe.Models.Services
         {
             get
             {
-                return "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";
+                return "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";
                 //return Environment.GetEnvironmentVariable("ORDER66EXE_SERVICES_EMAIL_API_KEY");
             }
         }

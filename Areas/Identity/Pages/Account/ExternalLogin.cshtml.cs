@@ -54,6 +54,10 @@ namespace Order66exe.Areas.Identity.Pages.Account
             public string Email { get; set; }
             [Required]
             public string UserName { get; set; }
+            [Required]
+            public int Discriminator { get; set; }
+            [Required]
+            public string AvatarUrl { get; set; }
         }
 
         public IActionResult OnGetAsync()
@@ -104,14 +108,19 @@ namespace Order66exe.Areas.Identity.Pages.Account
                 {
                     Input = new InputModel
                     {
-                        Email = info.Principal.FindFirstValue(ClaimTypes.Email)
+                        Email = info.Principal.FindFirstValue(ClaimTypes.Email),
+                        UserName = info.Principal.FindFirstValue(ClaimTypes.Name),
+                        Discriminator = Convert.ToInt32(info.Principal.FindFirstValue("urn:discord:user:discriminator")),
+                        AvatarUrl = info.Principal.FindFirstValue("urn:discord:avatar:url")
                     };
+
+                    return await OnPostConfirmationAsync(Input);
                 }
                 return Page();
             }
         }
 
-        public async Task<IActionResult> OnPostConfirmationAsync(string returnUrl = null)
+        public async Task<IActionResult> OnPostConfirmationAsync(InputModel input, string returnUrl = null)
         {
             returnUrl = returnUrl ?? Url.Content("~/");
             // Get the information about the user from the external login provider
@@ -124,7 +133,14 @@ namespace Order66exe.Areas.Identity.Pages.Account
 
             if (ModelState.IsValid)
             {
-                var user = new DiscordUser { UserName = Input.UserName, Email = Input.Email };
+                var user = new DiscordUser()
+                { 
+                    UserName = input.UserName, 
+                    Email = input.Email, 
+                    Discriminator = input.Discriminator,
+                    AvatarUrl = input.AvatarUrl
+                    
+                };
 
                 var result = await _userManager.CreateAsync(user);
                 if (result.Succeeded)
@@ -132,7 +148,7 @@ namespace Order66exe.Areas.Identity.Pages.Account
                     result = await _userManager.AddLoginAsync(user, info);
                     if (result.Succeeded)
                     {
-                        _logger.LogInformation("User created an account using {Name} provider.", info.LoginProvider);
+                        _logger.LogInformation("{User} created an account using {Name} provider.", user.UserName, info.LoginProvider);
 
                         var userId = await _userManager.GetUserIdAsync(user);
                         var code = await _userManager.GenerateEmailConfirmationTokenAsync(user);
@@ -157,6 +173,14 @@ namespace Order66exe.Areas.Identity.Pages.Account
                         return LocalRedirect(returnUrl);
                     }
                 }
+                else if (result.Errors.First(i => i.Code == "DuplicateUserName").Code != null)
+                {
+                    user = await _userManager.FindByEmailAsync(input.Email);
+                    await _signInManager.SignInAsync(user, isPersistent: false);
+                    var loginInfo = await _signInManager.GetExternalLoginInfoAsync();
+                    var anotherLogin = await _userManager.AddLoginAsync(user, loginInfo);
+                }
+
                 foreach (var error in result.Errors)
                 {
                     ModelState.AddModelError(string.Empty, error.Description);
@@ -165,7 +189,7 @@ namespace Order66exe.Areas.Identity.Pages.Account
 
             ProviderDisplayName = info.ProviderDisplayName;
             ReturnUrl = returnUrl;
-            return Page();
+            return null;
         }
     }
 }

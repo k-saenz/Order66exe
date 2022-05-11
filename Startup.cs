@@ -1,10 +1,5 @@
-using Microsoft.AspNetCore.Authentication;
-using Microsoft.AspNetCore.Authentication.Cookies;
-using Microsoft.AspNetCore.Authentication.JwtBearer;
-using Microsoft.AspNetCore.Authentication.OAuth;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.HttpOverrides;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.UI.Services;
@@ -12,15 +7,10 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
-using Microsoft.IdentityModel.Tokens;
 using Order66exe.Data;
 using Order66exe.Models;
 using Order66exe.Models.Services;
-using System.Net.Http;
-using System.Net.Http.Headers;
-using System.Security.Claims;
-using System.Text;
-using System.Text.Json;
+using System;
 
 namespace Order66exe
 {
@@ -36,14 +26,14 @@ namespace Order66exe
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-            services.AddDbContext<ApplicationDbContext>(options =>
+            services.AddDbContext<Order66DbContext>(options =>
                 options.UseSqlServer(
                     Configuration.GetConnectionString("DefaultConnection")));
             services.AddDatabaseDeveloperPageExceptionFilter();
 
             services.AddDefaultIdentity<DiscordUser>()
                 .AddRoles<IdentityRole>()
-                .AddEntityFrameworkStores<ApplicationDbContext>()
+                .AddEntityFrameworkStores<Order66DbContext>()
                 .AddDefaultTokenProviders();
 
             services.AddControllersWithViews();
@@ -67,7 +57,6 @@ namespace Order66exe
                     options.ClientSecret = Configuration.GetValue<string>("Authentication:Discord:ClientSecret");
                     options.Scope.Add("identify");
                     options.Scope.Add("email");
-                    options.Scope.Add("guild.members.read");
                     options.AuthorizationEndpoint = "https://discord.com/api/oauth2/authorize";
 
                 })
