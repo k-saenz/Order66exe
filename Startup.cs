@@ -51,6 +51,12 @@ namespace Order66exe
             ///schemes to the app
             /// </summary>
             services.AddAuthentication()
+                .AddCookie(options =>
+                {
+                    options.ExpireTimeSpan = TimeSpan.FromDays(7);
+                    options.SlidingExpiration = true;
+                    options.AccessDeniedPath = "/AccessDenied";
+                })
                 .AddDiscord(options =>
                 {
                     options.ClientId = Configuration.GetValue<string>("Authentication:Discord:ClientId");
