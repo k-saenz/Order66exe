@@ -1119,6 +1119,19 @@ hr.divider-light {
     background-color: #fff;
 }
 
+.nav-pills .nav-link.active, .nav-pills .show > .nav-link {
+    color: #fff;
+    background-color: #f4623a;
+    
+}
+    .nav-link.active:hover {
+        background-color: #cf5331;
+    }
+
+.nav-link {
+    color: #f4623a;
+}
+
 #mainNav {
     box-shadow: 0 0.5rem 1rem rgba(0, 0, 0, 0.15);
     background-color: #fff;

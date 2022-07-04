@@ -18,17 +18,17 @@ namespace Order66exe
     {
         public Startup(IConfiguration configuration)
         {
-            Configuration = configuration;
+            _config = configuration;
         }
 
-        public IConfiguration Configuration { get; }
+        public IConfiguration _config { get; }
 
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddDbContext<Order66DbContext>(options =>
                 options.UseSqlServer(
-                    Configuration.GetConnectionString("DefaultConnection")));
+                    _config.GetConnectionString("DefaultConnection")));
             services.AddDatabaseDeveloperPageExceptionFilter();
 
             services.AddDefaultIdentity<DiscordUser>()
@@ -41,7 +41,7 @@ namespace Order66exe
 
             //Add email config
             services.AddTransient<IEmailSender, EmailSender>();
-            services.Configure<AuthMessageSenderOptions>(Configuration);
+            services.Configure<AuthMessageSenderOptions>(_config);
 
 
             /***START AUTHENTICATION METHODS***/
@@ -59,8 +59,8 @@ namespace Order66exe
                 })
                 .AddDiscord(options =>
                 {
-                    options.ClientId = Configuration.GetValue<string>("Authentication:Discord:ClientId");
-                    options.ClientSecret = Configuration.GetValue<string>("Authentication:Discord:ClientSecret");
+                    options.ClientId = _config.GetValue<string>("Authentication:Discord:ClientId");
+                    options.ClientSecret = _config.GetValue<string>("Authentication:Discord:ClientSecret");
                     options.Scope.Add("identify");
                     options.Scope.Add("email");
                     options.AuthorizationEndpoint = "https://discord.com/api/oauth2/authorize";
@@ -68,7 +68,7 @@ namespace Order66exe
                 })
                 .AddGoogle(options =>
                 {
-                    IConfigurationSection googleAuth = Configuration.GetSection("Authentication:Google");
+                    IConfigurationSection googleAuth = _config.GetSection("Authentication:Google");
                     options.ClientId = googleAuth["ClientId"];
                     options.ClientSecret = googleAuth["ClientSecret"];
                 });

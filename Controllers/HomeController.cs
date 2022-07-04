@@ -9,6 +9,7 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Authorization;
 using System.Security.Claims;
 using Microsoft.AspNetCore.Identity;
+using Discord.WebSocket;
 
 namespace Order66exe.Controllers
 {
@@ -30,7 +31,7 @@ namespace Order66exe.Controllers
 
         public IActionResult Info()
         {
-            return View();
+            return View(new List<SocketRole>());
         }
 
         [Authorize(AuthenticationSchemes = "Discord")]

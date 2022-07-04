@@ -21,7 +21,7 @@
 //            ///<remarks>
 //            ///Get Client ID and Client Secret from JSON section in configuration files
 //            ///</remarks>
-//            IConfigurationSection discordAuthSection = Configuration.GetSection("Authentication:Discord");
+//            IConfigurationSection discordAuthSection = _config.GetSection("Authentication:Discord");
 //            options.ClientId = discordAuthSection["ClientId"];
 //            options.ClientSecret = discordAuthSection["ClientSecret"];
 

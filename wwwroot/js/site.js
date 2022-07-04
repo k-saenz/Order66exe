@@ -1,5 +1,3 @@
-
-
 //jQuery Doc Load Ready Evt Listener
 $(document).ready(() => {
     // Navbar shrink function

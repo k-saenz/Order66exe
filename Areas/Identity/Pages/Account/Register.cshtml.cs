@@ -14,6 +14,7 @@ using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.AspNetCore.WebUtilities;
 using Microsoft.Extensions.Logging;
 using Order66exe.Models;
+using Order66exe.Models.Services;
 
 namespace Order66exe.Areas.Identity.Pages.Account
 {
@@ -23,13 +24,13 @@ namespace Order66exe.Areas.Identity.Pages.Account
         private readonly SignInManager<DiscordUser> _signInManager;
         private readonly UserManager<DiscordUser> _userManager;
         private readonly ILogger<RegisterModel> _logger;
-        private readonly IEmailSender _emailSender;
+        private readonly EmailSender _emailSender;
 
         public RegisterModel(
             UserManager<DiscordUser> userManager,
             SignInManager<DiscordUser> signInManager,
             ILogger<RegisterModel> logger,
-            IEmailSender emailSender)
+            EmailSender emailSender)
         {
             _userManager = userManager;
             _signInManager = signInManager;
@@ -97,8 +98,7 @@ namespace Order66exe.Areas.Identity.Pages.Account
                         values: new { area = "Identity", userId = user.Id, code = code, returnUrl = returnUrl },
                         protocol: Request.Scheme);
 
-                    await _emailSender.SendEmailAsync(Input.Email, "Confirm your email",
-                        $"Please confirm your account by <a href='{HtmlEncoder.Default.Encode(callbackUrl)}'>clicking here</a>.");
+                    await _emailSender.SendEmailAsync(Input.Email, "Confirm Your Email", EmailStrings.GetConfirm(HtmlEncoder.Default.Encode(callbackUrl)));
 
                     if (_userManager.Options.SignIn.RequireConfirmedAccount)
                     {
@@ -110,6 +110,7 @@ namespace Order66exe.Areas.Identity.Pages.Account
                         return LocalRedirect(returnUrl);
                     }
                 }
+
                 foreach (var error in result.Errors)
                 {
                     ModelState.AddModelError(string.Empty, error.Description);

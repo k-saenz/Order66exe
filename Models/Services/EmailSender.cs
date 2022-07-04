@@ -34,7 +34,7 @@ namespace Order66exe.Models.Services
             {
                 From = new EmailAddress("no-reply@order66exe.com", "Order_66.exe"),
                 Subject = subject,
-                PlainTextContent = message,
+                //PlainTextContent = message,
                 HtmlContent = message
             };
             msg.AddTo(new EmailAddress(email));
